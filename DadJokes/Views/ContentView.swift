@@ -45,7 +45,7 @@ struct ContentView: View {
                 //                      CONDITION                        true   false
                 .foregroundColor(currentJokeAddedToFavourites == true ? .red : .secondary)
                 .onTapGesture {
-                    zoomIn.toggle()
+                    //zoomIn.toggle()
                     
                     // Only add to the list if it is not already there
                     if currentJokeAddedToFavourites == false {
