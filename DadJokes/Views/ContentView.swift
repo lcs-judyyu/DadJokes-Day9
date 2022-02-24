@@ -108,6 +108,9 @@ struct ContentView: View {
             await loadNewJoke()
             
             print("I tried to load a new joke")
+            
+            //load favourites from saved file
+            loadFavourites()
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .inactive {
@@ -200,6 +203,29 @@ struct ContentView: View {
             
         } catch {
             print("Unable to write list of favourites to the document directory")
+            print("=========")
+            print(error.localizedDescription)
+        }
+    }
+    
+    func loadFavourites() {
+        let filename = getDocumentsDirectory().appendingPathComponent(savedFavouritesLabel)
+        print(filename)
+        
+        do {
+            //load raw data
+           let data = try Data(contentsOf: filename)
+            
+            print("Save data to the document directory successfully.")
+            print("=========")
+            print(String(data: data, encoding: .utf8)!)
+            
+            //decode JSON into Swift native data structures
+            //NOTE: [] are used since we load into an array
+            favourites = try JSONDecoder().decode([DadJoke].self, from: data)
+            
+        } catch {
+            print("Could not loas the data from the stored JSON file")
             print("=========")
             print(error.localizedDescription)
         }
