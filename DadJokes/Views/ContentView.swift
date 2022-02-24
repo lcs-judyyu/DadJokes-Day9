@@ -41,11 +41,11 @@ struct ContentView: View {
                 .padding(10)
             
             Image(systemName: "heart.circle")
-                .font(zoomIn ? .largeTitle : .headline)
+                .font(zoomIn ? .largeTitle : .system(size: 60))
                 //                      CONDITION                        true   false
                 .foregroundColor(currentJokeAddedToFavourites == true ? .red : .secondary)
                 .onTapGesture {
-                    //zoomIn.toggle()
+                    zoomIn.toggle()
                     
                     // Only add to the list if it is not already there
                     if currentJokeAddedToFavourites == false {
@@ -116,6 +116,9 @@ struct ContentView: View {
                 print("Active")
             } else {
                 print("Background")
+                
+                //permanently save the favourite list
+                persistFavourites()
             }
         }
         .navigationTitle("icanhazdadjoke?")
@@ -171,6 +174,12 @@ struct ContentView: View {
 
     }
     
+    //save data permanently
+    func persistFavourites() {
+        //get a location to save data
+        let filename = getDocumentsDirectory().appendingPathComponent(savedFavouritesLabel)
+        print(filename)
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
